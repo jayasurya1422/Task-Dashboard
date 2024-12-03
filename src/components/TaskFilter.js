@@ -12,7 +12,7 @@ const TaskFilter = () => {
       style={{
         padding: '20px',
         borderRadius: '15px',
-        backgroundColor: '#f9f9f9', // Light background for a fresh, clean look
+        backgroundColor: '#f9f9f9',
         marginBottom: '30px',
       }}
     >
@@ -41,7 +41,7 @@ const TaskFilter = () => {
           justifyContent="center"
           alignItems="center"
           flexWrap="wrap"
-          gap="12px" // Adds consistent space between buttons
+          gap="12px"
         >
           {['all', 'completed', 'pending', 'overdue'].map((filter) => (
             <Button
@@ -57,12 +57,12 @@ const TaskFilter = () => {
                 fontSize: '16px',
                 textTransform: 'capitalize',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Soft shadow for subtle depth
-                backgroundColor: '#4caf50', // Lighter green for a fresh feel
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                backgroundColor: '#4caf50',
               }}
               sx={{
                 '&:hover': {
-                  backgroundColor: '#388e3c', // Darker green for hover
+                  backgroundColor: '#388e3c',
                   boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)',
                 },
                 '&:focus': {

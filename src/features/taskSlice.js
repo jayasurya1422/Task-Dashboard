@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   tasks: [],
-  filter: 'all', // all, completed, pending, overdue
+  filter: 'all', 
 };
 
 const taskSlice = createSlice({

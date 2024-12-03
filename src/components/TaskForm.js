@@ -13,7 +13,6 @@ const TaskForm = ({ taskToEdit, open, onClose }) => {
     completed: false,
   });
 
-  // Set the task data when editing a task
   useEffect(() => {
     if (taskToEdit) {
       setTask({
@@ -35,14 +34,12 @@ const TaskForm = ({ taskToEdit, open, onClose }) => {
   const handleSubmit = () => {
     if (task.title && task.dueDate) {
       if (taskToEdit) {
-        // Dispatch the edit task action if taskToEdit is present
         dispatch(editTask({ ...task, id: taskToEdit.id }));
       } else {
-        // Dispatch the add task action if taskToEdit is null
         dispatch(addTask({ ...task, id: Date.now() }));
       }
       setTask({ title: '', description: '', dueDate: '', completed: false });
-      onClose(); // Close the form after submitting
+      onClose();
     }
   };
 
@@ -63,7 +60,7 @@ const TaskForm = ({ taskToEdit, open, onClose }) => {
               onChange={(e) => setTask({ ...task, title: e.target.value })}
               InputLabelProps={{
                 shrink: true,
-                style: { fontSize: '1.2rem', fontWeight: 'bold' }, // Increased label size and bold font
+                style: { fontSize: '1.2rem', fontWeight: 'bold' },
               }}
             />
           </Grid>
@@ -77,7 +74,7 @@ const TaskForm = ({ taskToEdit, open, onClose }) => {
               onChange={(e) => setTask({ ...task, description: e.target.value })}
               InputLabelProps={{
                 shrink: true,
-                style: { fontSize: '1.2rem', fontWeight: 'bold' }, // Increased label size and bold font
+                style: { fontSize: '1.2rem', fontWeight: 'bold' },
               }}
             />
           </Grid>
@@ -92,7 +89,7 @@ const TaskForm = ({ taskToEdit, open, onClose }) => {
               onChange={(e) => setTask({ ...task, dueDate: e.target.value })}
               InputLabelProps={{
                 shrink: true,
-                style: { fontSize: '1.2rem', fontWeight: 'bold' }, // Increased label size and bold font
+                style: { fontSize: '1.2rem', fontWeight: 'bold' },
               }}
             />
           </Grid>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Grid, Button, Typography, Box, Container, Paper, Divider } from '@mui/material';
 import TaskCard from '../components/TaskCard';
 import TaskForm from '../components/TaskForm';
@@ -7,10 +7,9 @@ import TaskFilter from '../components/TaskFilter';
 
 const TaskDashboard = () => {
   const { tasks, filter } = useSelector((state) => state.task);
-  const [open, setOpen] = useState(false); // To control the TaskForm dialog
-  const [taskToEdit, setTaskToEdit] = useState(null); // For editing existing tasks
+  const [open, setOpen] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState(null);
 
-  // Filter tasks based on the selected filter
   const filteredTasks = tasks.filter((task) => {
     if (filter === 'completed') return task.completed;
     if (filter === 'pending') return !task.completed;
@@ -19,45 +18,37 @@ const TaskDashboard = () => {
   });
 
   const handleOpenForm = () => {
-    setOpen(true); // Open the TaskForm dialog
+    setOpen(true);
   };
 
   const handleCloseForm = () => {
-    setOpen(false); // Close the TaskForm dialog
-    setTaskToEdit(null); // Reset the task to edit after closing
+    setOpen(false);
+    setTaskToEdit(null);
   };
 
   const handleEditTask = (task) => {
-    setTaskToEdit(task); // Set task to edit
-    setOpen(true); // Open the TaskForm dialog in edit mode
+    setTaskToEdit(task);
+    setOpen(true);
   };
 
   return (
     <Container maxWidth="lg" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
-      {/* Header Section */}
       <Typography variant="h3" gutterBottom align="center" style={{ fontWeight: 600, color: '#333' }}>
         Task Dashboard
       </Typography>
-      
-      {/* Action Bar */}
       <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={3}>
         <TaskFilter />
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onClick={handleOpenForm} 
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleOpenForm}
           style={{ padding: '10px 20px', fontSize: '16px', borderRadius: '8px' }}
         >
           Add Task
         </Button>
       </Box>
-
       <Divider style={{ marginBottom: '20px' }} />
-
-      {/* TaskForm dialog */}
       <TaskForm open={open} onClose={handleCloseForm} taskToEdit={taskToEdit} />
-
-      {/* Task Cards */}
       <Grid container spacing={3}>
         {filteredTasks.length === 0 ? (
           <Grid item xs={12}>

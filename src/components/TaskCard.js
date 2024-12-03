@@ -14,15 +14,15 @@ const TaskCard = ({ task, onEdit }) => {
         display: 'flex',
         flexDirection: 'column',
         padding: '15px',
-        borderRadius: '16px', // Rounded corners for modern feel
-        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
-        backgroundColor: '#f9f9f9', // Soft background color
-        transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Smooth transitions for hover effects
+        borderRadius: '16px',
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+        backgroundColor: '#f9f9f9',
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
       }}
       sx={{
         '&:hover': {
-          transform: 'scale(1.05)', // Subtle zoom-in effect on hover
-          boxShadow: '0 6px 18px rgba(0, 0, 0, 0.15)', // Stronger shadow on hover for interactivity
+          transform: 'scale(1.05)',
+          boxShadow: '0 6px 18px rgba(0, 0, 0, 0.15)',
         },
       }}
     >
@@ -35,7 +35,7 @@ const TaskCard = ({ task, onEdit }) => {
             fontWeight: 600,
             fontSize: '1.2rem',
             marginBottom: '8px',
-            color: '#333', // Dark color for better visibility
+            color: '#333',
           }}
         >
           {task.title}
@@ -48,7 +48,7 @@ const TaskCard = ({ task, onEdit }) => {
           style={{
             fontSize: '1rem',
             lineHeight: 1.6,
-            color: '#666', // Slightly lighter text for description
+            color: '#666',
           }}
         >
           {task.description}
@@ -60,7 +60,7 @@ const TaskCard = ({ task, onEdit }) => {
           style={{
             fontSize: '0.9rem',
             fontWeight: 'bold',
-            color: '#333', // Darker text for the due date to stand out
+            color: '#333',
           }}
         >
           Due: {new Date(task.dueDate).toLocaleDateString()}
@@ -75,13 +75,12 @@ const TaskCard = ({ task, onEdit }) => {
           paddingBottom: '16px',
         }}
       >
-        {/* Completion Button */}
         <Button
           variant="contained"
           color={task.completed ? 'secondary' : 'primary'}
           onClick={() => dispatch(toggleTaskCompletion(task.id))}
           style={{
-            borderRadius: '30px', // Rounder button for a modern feel
+            borderRadius: '30px',
             textTransform: 'capitalize',
             fontWeight: 600,
             fontSize: '0.9rem',
@@ -100,7 +99,6 @@ const TaskCard = ({ task, onEdit }) => {
           {task.completed ? 'Mark as Pending' : 'Mark as Completed'}
         </Button>
 
-        {/* Edit and Delete Icons */}
         <Box>
           <IconButton
             onClick={() => onEdit(task)}
@@ -111,8 +109,8 @@ const TaskCard = ({ task, onEdit }) => {
             }}
             sx={{
               '&:hover': {
-                transform: 'scale(1.1)', // Slight scale on hover
-                color: '#1976d2', // Change color on hover for interaction feedback
+                transform: 'scale(1.1)',
+                color: '#1976d2',
               },
             }}
           >
@@ -127,8 +125,8 @@ const TaskCard = ({ task, onEdit }) => {
             }}
             sx={{
               '&:hover': {
-                transform: 'scale(1.1)', // Slight scale on hover
-                color: '#d32f2f', // Change color on hover for interaction feedback
+                transform: 'scale(1.1)',
+                color: '#d32f2f',
               },
             }}
           >
