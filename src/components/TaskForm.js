@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Box } from '@mui/material';
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Box, FormControlLabel, Checkbox } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { addTask, editTask } from '../features/taskSlice';
 
@@ -12,6 +12,8 @@ const TaskForm = ({ taskToEdit, open, onClose }) => {
     dueDate: '',
     completed: false,
   });
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (taskToEdit) {
@@ -33,12 +35,23 @@ const TaskForm = ({ taskToEdit, open, onClose }) => {
 
   const handleSubmit = () => {
     if (task.title && task.dueDate) {
-      if (taskToEdit) {
-        dispatch(editTask({ ...task, id: taskToEdit.id }));
-      } else {
-        dispatch(addTask({ ...task, id: Date.now() }));
+      if (new Date(task.dueDate) < new Date()) {
+        alert('Due date cannot be in the past.');
+        return;
       }
+
+      const taskData = { title: task.title, description: task.description, dueDate: task.dueDate, completed: task.completed };
+
+      setLoading(true);
+
+      if (taskToEdit) {
+        dispatch(editTask({ id: taskToEdit.id, updatedTask: taskData }));
+      } else {
+        dispatch(addTask({ ...taskData, id: Date.now() }));
+      }
+
       setTask({ title: '', description: '', dueDate: '', completed: false });
+      setLoading(false);
       onClose();
     }
   };
@@ -93,6 +106,18 @@ const TaskForm = ({ taskToEdit, open, onClose }) => {
               }}
             />
           </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={task.completed}
+                  onChange={(e) => setTask({ ...task, completed: e.target.checked })}
+                  color="primary"
+                />
+              }
+              label="Completed"
+            />
+          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
@@ -105,8 +130,9 @@ const TaskForm = ({ taskToEdit, open, onClose }) => {
           color="primary"
           variant="contained"
           sx={{ ml: 2 }}
+          disabled={loading}
         >
-          {taskToEdit ? 'Save Changes' : 'Add Task'}
+          {loading ? 'Saving...' : taskToEdit ? 'Save Changes' : 'Add Task'}
         </Button>
       </DialogActions>
     </Dialog>

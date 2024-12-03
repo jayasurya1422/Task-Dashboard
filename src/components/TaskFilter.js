@@ -42,6 +42,11 @@ const TaskFilter = () => {
           alignItems="center"
           flexWrap="wrap"
           gap="12px"
+          sx={{
+            '& > *': {
+              flex: '1 1 200px', // Ensures buttons wrap properly on smaller screens
+            },
+          }}
         >
           {['all', 'completed', 'pending', 'overdue'].map((filter) => (
             <Button

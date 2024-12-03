@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Grid, Button, Typography, Box, Container, Paper, Divider } from '@mui/material';
+import { Grid, Button, Typography, Box, Container, Paper, Divider, CircularProgress } from '@mui/material';
 import TaskCard from '../components/TaskCard';
 import TaskForm from '../components/TaskForm';
 import TaskFilter from '../components/TaskFilter';
 
 const TaskDashboard = () => {
-  const { tasks, filter } = useSelector((state) => state.task);
+  const { tasks, filter, loading } = useSelector((state) => state.task);
   const [open, setOpen] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState(null);
 
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === 'completed') return task.completed;
-    if (filter === 'pending') return !task.completed;
-    if (filter === 'overdue') return new Date(task.dueDate) < new Date();
-    return true;
-  });
+  // Memoize the filtered tasks to prevent unnecessary recalculations
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task) => {
+      if (filter === 'completed') return task.completed;
+      if (filter === 'pending') return !task.completed;
+      if (filter === 'overdue') return new Date(task.dueDate) < new Date();
+      return true;
+    });
+  }, [tasks, filter]);
 
   const handleOpenForm = () => {
     setOpen(true);
@@ -49,23 +52,29 @@ const TaskDashboard = () => {
       </Box>
       <Divider style={{ marginBottom: '20px' }} />
       <TaskForm open={open} onClose={handleCloseForm} taskToEdit={taskToEdit} />
-      <Grid container spacing={3}>
-        {filteredTasks.length === 0 ? (
-          <Grid item xs={12}>
-            <Paper elevation={3} style={{ padding: '30px', textAlign: 'center', background: '#f5f5f5' }}>
-              <Typography variant="h5" style={{ fontWeight: 500, color: '#888' }}>
-                No Tasks Available
-              </Typography>
-            </Paper>
-          </Grid>
-        ) : (
-          filteredTasks.map((task) => (
-            <Grid item xs={12} sm={6} md={4} key={task.id}>
-              <TaskCard task={task} onEdit={handleEditTask} />
+      {loading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" style={{ height: '200px' }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Grid container spacing={3}>
+          {filteredTasks.length === 0 ? (
+            <Grid item xs={12}>
+              <Paper elevation={3} style={{ padding: '30px', textAlign: 'center', background: '#f5f5f5' }}>
+                <Typography variant="h5" style={{ fontWeight: 500, color: '#888' }}>
+                  No Tasks Available
+                </Typography>
+              </Paper>
             </Grid>
-          ))
-        )}
-      </Grid>
+          ) : (
+            filteredTasks.map((task) => (
+              <Grid item xs={12} sm={6} md={4} key={task.id}>
+                <TaskCard task={task} onEdit={handleEditTask} />
+              </Grid>
+            ))
+          )}
+        </Grid>
+      )}
     </Container>
   );
 };
